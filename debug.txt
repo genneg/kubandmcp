@@ -1,0 +1,4 @@
+  File "<string>", line 1
+    import logging; logging.basicConfig(level=logging.DEBUG); from agent import agent, mcp_toolset; from google.adk.runners import InMemoryRunner; from google.genai import types; runner = InMemoryRunner(agent=agent, app_name='test'); import asyncio; async def run(): async for e in runner.run_async(user_id='u', session_id='s', new_message=types.UserContent(parts=[types.Part.from_text(text='meteo roma')])): print(e); asyncio.run(run())
+                                                                                                                                                                                                                                                          ^^^^^
+SyntaxError: invalid syntax

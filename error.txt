@@ -1,0 +1,7 @@
+C:\Users\Gennaro\AntiGravity Projects\testDevOpsProjects\kubandmcp\debug_adk.py:11: DeprecationWarning: 'asyncio.WindowsProactorEventLoopPolicy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+C:\Users\Gennaro\AntiGravity Projects\testDevOpsProjects\kubandmcp\debug_adk.py:11: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
+  asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+DEBUG:asyncio:Using proactor: IocpProactor
+Testing ADK pipeline...
+EXCEPTION: Failed to create MCP session: 
