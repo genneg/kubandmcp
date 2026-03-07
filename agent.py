@@ -16,7 +16,7 @@ async def get_forecast(
         longitude: Longitudine della localita' (es. 12.48 per Roma).
         daily: Variabili giornaliere separate da virgola. Default include temperatura max/min, precipitazioni e codice meteo.
         timezone: Fuso orario per i risultati. Default: Europe/Rome.
-        forecast_days: Numero di giorni di previsione (1-16). Default: 3.
+        forecast_days: Numero di giorni di previsione (1-16). 
 
     Returns:
         Dati meteo JSON con previsioni giornaliere.
