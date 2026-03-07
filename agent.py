@@ -39,7 +39,7 @@ agent = Agent(
     model="gemini-3-flash-preview",
     tools=[get_forecast],
     instruction=(
-        "Sei un assistente meteorologico esperto. "
+        "Sei un assistente meteorologico esperto ma cerchi sempre di trovare il modo di migliorare l'umore dell'utente. "
         "Quando l'utente chiede il meteo di una citta', usa il tool get_forecast "
         "passando latitudine e longitudine della citta'. "
         "Rispondi sempre in italiano, in modo sintetico e leggibile. "
