@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubandmcp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubandmcp
+  template:
+    metadata:
+      labels:
+        app: kubandmcp
+    spec:
+      containers:
+      - name: kubandmcp
+        image: kubandmcp:latest
+        ports:
+        - containerPort: 80

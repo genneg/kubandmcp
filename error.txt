@@ -3,5 +3,194 @@ C:\Users\Gennaro\AntiGravity Projects\testDevOpsProjects\kubandmcp\debug_adk.py:
 C:\Users\Gennaro\AntiGravity Projects\testDevOpsProjects\kubandmcp\debug_adk.py:11: DeprecationWarning: 'asyncio.set_event_loop_policy' is deprecated and slated for removal in Python 3.16
   asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 DEBUG:asyncio:Using proactor: IocpProactor
+INFO:google_adk.google.adk.models.google_llm:Sending out request, model: gemini-3-flash-preview, backend: GoogleLLMVariant.GEMINI_API, stream: False
+DEBUG:google_adk.google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+Sei un assistente meteorologico esperto. Quando l'utente chiede il meteo di una citta', usa il tool get_forecast passando latitudine e longitudine della citta'. Rispondi sempre in italiano, in modo sintetico e leggibile. Formatta i dati in modo chiaro (temperatura, precipitazioni, condizioni).
+
+You are an agent. Your internal name is "assistente_meteo".
+-----------------------------------------------------------
+Config:
+{'http_options': {'headers': {'x-goog-api-client': 'google-adk/1.26.0 gl-python/3.14.2', 'user-agent': 'google-adk/1.26.0 gl-python/3.14.2'}}, 'tools': [{}]}
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"Che tempo fa a Roma domani?"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+get_forecast: {'latitude': {'type': <Type.NUMBER: 'NUMBER'>}, 'longitude': {'type': <Type.NUMBER: 'NUMBER'>}, 'daily': {'default': 'temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode', 'type': <Type.STRING: 'STRING'>}, 'timezone': {'default': 'Europe/Rome', 'type': <Type.STRING: 'STRING'>}, 'forecast_days': {'default': 3, 'type': <Type.INTEGER: 'INTEGER'>}} 
+-----------------------------------------------------------
+
+DEBUG:httpcore.connection:connect_tcp.started host='generativelanguage.googleapis.com' port=443 local_address=None timeout=None socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E4D6270>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x000002323E156DE0> server_hostname='generativelanguage.googleapis.com' timeout=None
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E432D50>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sat, 07 Mar 2026 12:52:13 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=2556'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+INFO:google_adk.google.adk.models.google_llm:Response received from the model.
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+DEBUG:google_adk.google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: get_forecast, args: {'forecast_days': 2, 'latitude': 41.89, 'longitude': 12.48}
+-----------------------------------------------------------
+Raw response:
+{"sdk_http_response":{"headers":{"content-type":"application/json; charset=UTF-8","vary":"Origin, X-Origin, Referer","content-encoding":"gzip","date":"Sat, 07 Mar 2026 12:52:13 GMT","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=2556","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000","transfer-encoding":"chunked"}},"candidates":[{"content":{"parts":[{"function_call":{"args":{"forecast_days":2,"latitude":41.89,"longitude":12.48},"name":"get_forecast"},"thought_signature":"ErQGCrEGAb4-9vvHppIxyI-W2Cj8yIbelJyXcxHxpJLspw-a4ShSwIg2r-vFderJl58Udwyerz75oqlkwcb2LX1jO4eztYHcryn2kWwymOIHAFVp4fc6_BJaG_hSuhkwHMgVufi1rFH7f-O-KS0is3fzLar1ITQgnqn7QJNvXdwv7diHYPYra_ZH3pGN3Y4p0dhRbNDjyPcNN9wJ4NHC8KjnK1qocfN0y8qIBggpYNs1sap2zKK2Wh1yYvUWs6UYFl9_Sd-xyN6DtSGNunUBCUHzaGMX0juDObfhScfLeMRwUEBxBKDfK2GXzkSwdbkNMTo41yPj2hN-489ngIqpRDDzZV_JY-LgohvkOCpuL2PsTMpzHH-D8gasNBSY8PV6F8cXa6umdsbSgRXRO_SSkfNqwjAigwuj4takzPLCN87He6bj-JXW-5Czg7RE7Y5GsBQHf_0yEnIpvEvm3WlLrblUbh03LuXmcXmDzKW9ftaMA7fcjV6kjmt7xmH4GMV02L3XkhPDWvETByWG8Mvgj_t7f7R5fi4xuGB5T-ApP1CwOeRWlHZFSTR-NtLlwvFhBUZskiZ50tbp1vH25Dco2MZ87K3CNkaGWv664AWccS0JsUuy9fV0CTeVpc7xdlxZzK2Zek5k8bK8OFz0BjLmdd_c0Gw9hFUg5wGoAHjCPt0M1Yr91XO-gizNi-rH3X9q7z9F6MyzmFEzZnbz_Q_Yxb--N12qZcKO3_wfBas0bWUFuqc4mF9kt0i888Uvq9K4AILXDl2cZ31qxuE3Dv6jD1a3aGTGmsq4sAULet1Za4wKyHjLb5slTtf-2kk8uUzZYaaauVwl-zzj-9GVuiZVeBUsr7XIoi1uqg2lKdAB61Q7VZ8d4KBJIwzFN0LxnMkxM-_Ii9OYTENwONgzwgDFVVS75iCWr2JWylvEMyIrnJjaQ3GyngY_nmVp6nKaZzkR6pvw-HK6VLK7GW_LOw4gcm8Ge27K72QITBDoudJcpTrOKrWqh4IkZSoonyrNZlZBuNsKIiPocjMzKo43puFtP2L7lA7sJ2r9QyKX_B2FDMYBMA5VjxSx2T3EnAjlPAbJJoOYfVJumg=="}],"role":"model"},"finish_reason":"STOP","index":0}],"model_version":"gemini-3-flash-preview","response_id":"fR-saYiPMKXwvdIP5cqNqAQ","usage_metadata":{"candidates_token_count":32,"prompt_token_count":355,"prompt_tokens_details":[{"modality":"TEXT","token_count":355}],"thoughts_token_count":233,"total_token_count":620}}
+-----------------------------------------------------------
+
+DEBUG:httpcore.connection:connect_tcp.started host='api.open-meteo.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E51E850>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x000002323E424D50> server_hostname='api.open-meteo.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E4535C0>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'GET']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'GET']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'GET']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 07 Mar 2026 12:52:14 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'deflate')])
+INFO:httpx:HTTP Request: GET https://api.open-meteo.com/v1/forecast?latitude=41.89&longitude=12.48&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum%2Cweathercode&timezone=Europe%2FRome&forecast_days=2 "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'GET']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.complete
+INFO:google_adk.google.adk.models.google_llm:Sending out request, model: gemini-3-flash-preview, backend: GoogleLLMVariant.GEMINI_API, stream: False
+DEBUG:google_adk.google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+Sei un assistente meteorologico esperto. Quando l'utente chiede il meteo di una citta', usa il tool get_forecast passando latitudine e longitudine della citta'. Rispondi sempre in italiano, in modo sintetico e leggibile. Formatta i dati in modo chiaro (temperatura, precipitazioni, condizioni).
+
+You are an agent. Your internal name is "assistente_meteo".
+-----------------------------------------------------------
+Config:
+{'http_options': {'headers': {'x-goog-api-client': 'google-adk/1.26.0 gl-python/3.14.2', 'user-agent': 'google-adk/1.26.0 gl-python/3.14.2'}}, 'tools': [{}]}
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"Che tempo fa a Roma domani?"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"forecast_days":2,"latitude":41.89,"longitude":12.48},"name":"get_forecast"},"thought_signature":"ErQGCrEGAb4-9vvHppIxyI-W2Cj8yIbelJyXcxHxpJLspw-a4ShSwIg2r-vFderJl58Udwyerz75oqlkwcb2LX1jO4eztYHcryn2kWwymOIHAFVp4fc6_BJaG_hSuhkwHMgVufi1rFH7f-O-KS0is3fzLar1ITQgnqn7QJNvXdwv7diHYPYra_ZH3pGN3Y4p0dhRbNDjyPcNN9wJ4NHC8KjnK1qocfN0y8qIBggpYNs1sap2zKK2Wh1yYvUWs6UYFl9_Sd-xyN6DtSGNunUBCUHzaGMX0juDObfhScfLeMRwUEBxBKDfK2GXzkSwdbkNMTo41yPj2hN-489ngIqpRDDzZV_JY-LgohvkOCpuL2PsTMpzHH-D8gasNBSY8PV6F8cXa6umdsbSgRXRO_SSkfNqwjAigwuj4takzPLCN87He6bj-JXW-5Czg7RE7Y5GsBQHf_0yEnIpvEvm3WlLrblUbh03LuXmcXmDzKW9ftaMA7fcjV6kjmt7xmH4GMV02L3XkhPDWvETByWG8Mvgj_t7f7R5fi4xuGB5T-ApP1CwOeRWlHZFSTR-NtLlwvFhBUZskiZ50tbp1vH25Dco2MZ87K3CNkaGWv664AWccS0JsUuy9fV0CTeVpc7xdlxZzK2Zek5k8bK8OFz0BjLmdd_c0Gw9hFUg5wGoAHjCPt0M1Yr91XO-gizNi-rH3X9q7z9F6MyzmFEzZnbz_Q_Yxb--N12qZcKO3_wfBas0bWUFuqc4mF9kt0i888Uvq9K4AILXDl2cZ31qxuE3Dv6jD1a3aGTGmsq4sAULet1Za4wKyHjLb5slTtf-2kk8uUzZYaaauVwl-zzj-9GVuiZVeBUsr7XIoi1uqg2lKdAB61Q7VZ8d4KBJIwzFN0LxnMkxM-_Ii9OYTENwONgzwgDFVVS75iCWr2JWylvEMyIrnJjaQ3GyngY_nmVp6nKaZzkR6pvw-HK6VLK7GW_LOw4gcm8Ge27K72QITBDoudJcpTrOKrWqh4IkZSoonyrNZlZBuNsKIiPocjMzKo43puFtP2L7lA7sJ2r9QyKX_B2FDMYBMA5VjxSx2T3EnAjlPAbJJoOYfVJumg=="}],"role":"model"}
+{"parts":[{"function_response":{"name":"get_forecast","response":{"latitude":41.875,"longitude":12.5,"generationtime_ms":0.05257129669189453,"utc_offset_seconds":3600,"timezone":"Europe/Rome","timezone_abbreviation":"GMT+1","elevation":18.0,"daily_units":{"time":"iso8601","temperature_2m_max":"┬░C","temperature_2m_min":"┬░C","precipitation_sum":"mm","weathercode":"wmo code"},"daily":{"time":["2026-03-07","2026-03-08"],"temperature_2m_max":[17.5,17.3],"temperature_2m_min":[9.6,11.4],"precipitation_sum":[0.0,0.4],"weathercode":[3,61]}}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+get_forecast: {'latitude': {'type': <Type.NUMBER: 'NUMBER'>}, 'longitude': {'type': <Type.NUMBER: 'NUMBER'>}, 'daily': {'default': 'temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode', 'type': <Type.STRING: 'STRING'>}, 'timezone': {'default': 'Europe/Rome', 'type': <Type.STRING: 'STRING'>}, 'forecast_days': {'default': 3, 'type': <Type.INTEGER: 'INTEGER'>}} 
+-----------------------------------------------------------
+
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:connect_tcp.started host='generativelanguage.googleapis.com' port=443 local_address=None timeout=None socket_options=None
+DEBUG:httpcore.connection:close.complete
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E452190>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x000002323E424EF0> server_hostname='generativelanguage.googleapis.com' timeout=None
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002323E4E2570>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=UTF-8'), (b'Vary', b'Origin'), (b'Vary', b'X-Origin'), (b'Vary', b'Referer'), (b'Content-Encoding', b'gzip'), (b'Date', b'Sat, 07 Mar 2026 12:52:16 GMT'), (b'Server', b'scaffolding on HTTPServer2'), (b'X-XSS-Protection', b'0'), (b'X-Frame-Options', b'SAMEORIGIN'), (b'X-Content-Type-Options', b'nosniff'), (b'Server-Timing', b'gfet4t7; dur=2222'), (b'Alt-Svc', b'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'), (b'Transfer-Encoding', b'chunked')])
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+INFO:google_adk.google.adk.models.google_llm:Response received from the model.
+DEBUG:google_adk.google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+Ecco le previsioni meteo per **Roma** per domani, 8 marzo:
+
+*   **Condizioni:** Pioggia leggera
+*   **Temperatura Massima:** 17.3┬░C
+*   **Temperatura Minima:** 11.4┬░C
+*   **Precipitazioni:** 0.4 mm
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"sdk_http_response":{"headers":{"content-type":"application/json; charset=UTF-8","vary":"Origin, X-Origin, Referer","content-encoding":"gzip","date":"Sat, 07 Mar 2026 12:52:16 GMT","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=2222","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000","transfer-encoding":"chunked"}},"candidates":[{"content":{"parts":[{"text":"Ecco le previsioni meteo per **Roma** per domani, 8 marzo:\n\n*   **Condizioni:** Pioggia leggera\n*   **Temperatura Massima:** 17.3┬░C\n*   **Temperatura Minima:** 11.4┬░C\n*   **Precipitazioni:** 0.4 mm","thought_signature":"Eo4ECosEAb4-9vsH8xUBCscNiNb1j-Rd7_cgBF6sY_7kOUv0j1OdTB8Dx5W6Io7jL5vsrW6JpGTMCBzPtfgiZrMj4nTKs5sVV_0N9NgumlAIg2nXckFdU0kqC2MsgOK0Zuw2fn6BTUH1n18K4S0CtLVnHw2W3xx1FnbSieFsLRv134eR1r4frTTllnpTB_sBWWt6d2Yhu0pQF3cPyvfiU-8Cw0Xery6LMH_anRWvX3kmFe0EWcuu68MoJlqZL_TuXkhWhKhr7aJnGptTfhxk__xExNqgUfCtgB3JMXsXJEn4nEPyRmYQK2YXm-yhtgHDRXNemcZ_s7cJNVqU-DQqq3m20S80sM545iKFc6ezhgnFWyLLenMa7mexnf8rxaUH6AnF_1MwOJEvf2OaSpi3qrDAb5ujRt9-l80N4dezZjeheEXxHs1ZDqRzHnpUjKVPD5ds_jJn-4MgUk8F1glS4DrpIbJX-rdnXLVmhxAKL9cQw9FmcY_n3xXd0Ma-EZwSy0BW8xJQ3X43TIRupKc5ZKP-XhOJZQ0sQjCSQcs3KaqJEwoTe7ZMzfvkMtNajNQBgWJ3zeyVtOM_oR9tH8LvM-O1YLE3i9CCj5PZ91lycQIfmh8nQ1rgQvi3AZsWfgXMO0UEmyGN8mOd-NvgAYyXN7Uw-ofMJJuGrwQVE6eg1l6V2UocmdTPrHd5_-aBPRcVKQ=="}],"role":"model"},"finish_reason":"STOP","index":0}],"model_version":"gemini-3-flash-preview","response_id":"gB-sadHSLvPXvdIP36eh4QE","usage_metadata":{"candidates_token_count":70,"prompt_token_count":839,"prompt_tokens_details":[{"modality":"TEXT","token_count":839}],"thoughts_token_count":164,"total_token_count":1073}}
+-----------------------------------------------------------
+
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.failed exception=CancelledError()
 Testing ADK pipeline...
-EXCEPTION: Failed to create MCP session: 
+EVENT: model_version='gemini-3-flash-preview' content=Content(
+  parts=[
+    Part(
+      function_call=FunctionCall(
+        args={
+          'forecast_days': 2,
+          'latitude': 41.89,
+          'longitude': 12.48
+        },
+        id='adk-4334f419-70a0-4a57-8b84-98d02a3185ef',
+        name='get_forecast'
+      ),
+      thought_signature=b'\x12\xb4\x06\n\xb1\x06\x01\xbe>\xf6\xfb\xc7\xa6\x921\xc8\x8f\x96\xd8(\xfc\xc8\x86\xde\x94\x9c\x97s\x11\xf1\xa4\x92\xec\xa7\x0f\x9a\xe1(R\xc0\x886\xaf\xeb\xc5u\xea\xc9\x97\x9f\x14w\x0c\x9e\xaf>\xf9\xa2\xa9d\xc1\xc6\xf6-}c;\x87\xb3\xb5\x81\xdc\xaf)\xf6\x91l2\x98\xe2\x07\x00Ui\xe1\xf7:\xfc\x12Z\x1b\xf8R\xba\x190\x1c...'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=32,
+  prompt_token_count=355,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=355
+    ),
+  ],
+  thoughts_token_count=233,
+  total_token_count=620
+) live_session_resumption_update=None input_transcription=None output_transcription=None avg_logprobs=None logprobs_result=None cache_metadata=None citation_metadata=None interaction_id=None invocation_id='e-f128e663-7647-43e1-a2a4-5779c4a436c1' author='assistente_meteo' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None) long_running_tool_ids=set() branch=None id='72436ebb-7d22-483c-b4ce-29aca4352127' timestamp=1772887931.462459
+EVENT: model_version=None content=Content(
+  parts=[
+    Part(
+      function_response=FunctionResponse(
+        id='adk-4334f419-70a0-4a57-8b84-98d02a3185ef',
+        name='get_forecast',
+        response=<dict len=9>
+      )
+    ),
+  ],
+  role='user'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=None error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=None live_session_resumption_update=None input_transcription=None output_transcription=None avg_logprobs=None logprobs_result=None cache_metadata=None citation_metadata=None interaction_id=None invocation_id='e-f128e663-7647-43e1-a2a4-5779c4a436c1' author='assistente_meteo' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None) long_running_tool_ids=None branch=None id='a473b2bf-bd72-4750-9d18-10e2ac2eaa23' timestamp=1772887934.894016
+EVENT: model_version='gemini-3-flash-preview' content=Content(
+  parts=[
+    Part(
+      text="""Ecco le previsioni meteo per **Roma** per domani, 8 marzo:
+
+*   **Condizioni:** Pioggia leggera
+*   **Temperatura Massima:** 17.3┬░C
+*   **Temperatura Minima:** 11.4┬░C
+*   **Precipitazioni:** 0.4 mm""",
+      thought_signature=b'\x12\x8e\x04\n\x8b\x04\x01\xbe>\xf6\xfb\x07\xf3\x15\x01\n\xc7\r\x88\xd6\xf5\x8f\xe4]\xef\xf7 \x04^\xacc\xfe\xe49K\xf4\x8fS\x9dL\x1f\x03\xc7\x95\xba"\x8e\xe3/\x9b\xec\xadn\x89\xa4d\xcc\x08\x1c\xcf\xb5\xf8"f\xb3#\xe2t\xca\xb3\x9b\x15W\xfd\r\xf4\xd8.\x9aP\x08\x83i\xd7rA]SI*\x0bc,\x80\xe2\xb4f...'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=70,
+  prompt_token_count=839,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=839
+    ),
+  ],
+  thoughts_token_count=164,
+  total_token_count=1073
+) live_session_resumption_update=None input_transcription=None output_transcription=None avg_logprobs=None logprobs_result=None cache_metadata=None citation_metadata=None interaction_id=None invocation_id='e-f128e663-7647-43e1-a2a4-5779c4a436c1' author='assistente_meteo' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None) long_running_tool_ids=None branch=None id='4ab1ea19-0086-4239-9e3d-0b4eff399a46' timestamp=1772887934.894924

@@ -6,31 +6,24 @@ from google.genai import types
 
 load_dotenv()
 
-# ─────────────────────────────────────────────
-# FIX #1 — Windows ProactorEventLoop per subprocess/pipe
-# Deve essere fatto PRIMA di asyncio.run()
-# ─────────────────────────────────────────────
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 
 async def main() -> None:
-    # FIX #3 — import DENTRO async def, dopo che il loop corretto è attivo
-    from agent import create_agent_and_toolset
-    agent, mcp_toolset = create_agent_and_toolset()
+    from agent import agent
 
     runner = InMemoryRunner(agent=agent, app_name="AssistenteMeteoCLI")
 
-    # FIX #2 — usa l'ID restituito da create_session, non uno arbitrario
     session = await runner.session_service.create_session(
         app_name="AssistenteMeteoCLI",
-        user_id="local_user"
+        user_id="local_user",
     )
-    session_id = session.id  # ID generato internamente, garantito esistente
+    session_id = session.id
 
-    print("🌤️  Assistente Meteo | ADK + Gemini 2.5 + Docker MCP OpenAPI")
-    print(f"   Session ID: {session_id}")
-    print("   Digita 'esci' per uscire.\n")
+    print("Assistente Meteo | ADK + Gemini + Open-Meteo")
+    print(f"Session ID: {session_id}")
+    print("Digita 'esci' per uscire.\n")
 
     try:
         while True:
@@ -50,11 +43,11 @@ async def main() -> None:
             try:
                 async for event in runner.run_async(
                     user_id="local_user",
-                    session_id=session_id,  # FIX #2 — ID corretto
+                    session_id=session_id,
                     new_message=types.Content(
                         role="user",
-                        parts=[types.Part.from_text(text=user_input)]
-                    )
+                        parts=[types.Part.from_text(text=user_input)],
+                    ),
                 ):
                     if event.is_final_response() and event.content:
                         for part in event.content.parts:
@@ -62,17 +55,12 @@ async def main() -> None:
                                 print(part.text, end="", flush=True)
 
             except Exception as e:
-                print(f"\n[Errore durante l'esecuzione: {e}]")
+                print(f"\n[Errore: {e}]")
 
             print()
 
     except KeyboardInterrupt:
         print("\n\nInterruzione manuale.")
-
-    finally:
-        print("\nChiusura connessioni MCP...")
-        await mcp_toolset.close()
-        print("Chiuso correttamente.")
 
 
 if __name__ == "__main__":

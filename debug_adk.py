@@ -13,8 +13,7 @@ if sys.platform == "win32":
 logging.basicConfig(level=logging.DEBUG)
 
 async def run():
-    from agent import create_agent_and_toolset
-    agent, mcp_toolset = create_agent_and_toolset()
+    from agent import agent
     
     runner = InMemoryRunner(agent=agent, app_name='testApp')
     session = await runner.session_service.create_session(
@@ -32,8 +31,8 @@ async def run():
             print("EVENT:", e)
     except Exception as ex:
         print("EXCEPTION:", ex)
-    finally:
-        await mcp_toolset.close()
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     asyncio.run(run())
