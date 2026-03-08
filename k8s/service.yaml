@@ -5,7 +5,8 @@ metadata:
 spec:
   selector:
     app: kubandmcp
+  type: NodePort
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80  
+      targetPort: 8000

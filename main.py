@@ -1,67 +1,50 @@
 import asyncio
 import sys
+import os
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
+
 from google.adk.runners import InMemoryRunner
 from google.genai import types
 
 load_dotenv()
 
+# Workaround per Windows
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
+# Importiamo l'agente che espone il tool "get_forecast"
+from agent import agent
 
-async def main() -> None:
-    from agent import agent
+app = FastAPI()
 
-    runner = InMemoryRunner(agent=agent, app_name="AssistenteMeteoCLI")
+# Serviamo la cartella static per l'interfaccia UI
+os.makedirs("static", exist_ok=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-    session = await runner.session_service.create_session(
-        app_name="AssistenteMeteoCLI",
-        user_id="local_user",
-    )
-    session_id = session.id
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    with open("static/index.html", "r", encoding="utf-8") as f:
+        return f.read()
 
-    print("Assistente Meteo | ADK + Gemini + Open-Meteo")
-    print(f"Session ID: {session_id}")
-    print("Digita 'esci' per uscire.\n")
-
+@app.post("/api/chat")
+async def chat(request: Request):
+    data = await request.json()
+    user_message = data.get("message", "")
+    session_id = data.get("session_id", "default_session")
+    
+    if not user_message:
+        return {"response": "Messaggio vuoto"}
+        
     try:
-        while True:
-            try:
-                user_input = input("Tu: ")
-            except EOFError:
-                break
-
-            if user_input.strip().lower() in ("esci", "quit", "exit"):
-                break
-
-            if not user_input.strip():
-                continue
-
-            print("Agente: ", end="", flush=True)
-
-            try:
-                async for event in runner.run_async(
-                    user_id="local_user",
-                    session_id=session_id,
-                    new_message=types.Content(
-                        role="user",
-                        parts=[types.Part.from_text(text=user_input)],
-                    ),
-                ):
-                    if event.is_final_response() and event.content:
-                        for part in event.content.parts:
-                            if hasattr(part, "text") and part.text:
-                                print(part.text, end="", flush=True)
-
-            except Exception as e:
-                print(f"\n[Errore: {e}]")
-
-            print()
-
-    except KeyboardInterrupt:
-        print("\n\nInterruzione manuale.")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+        runner = InMemoryRunner()
+        response = await runner.run(
+            agent=agent,
+            user_input=user_message,
+            session_id=session_id
+        )
+        return {"response": response.message.content.parts[0].text}
+    except Exception as e:
+        return {"response": f"Errore interno: {str(e)}"}
